@@ -21,7 +21,12 @@ chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 service = Service(os.environ.get("CHROMEDRIVER_PATH"))
-selenium_driver = webdriver.Chrome(service=service, options=chrome_options)
+selenium_driver = webdriver.Chrome(service=service,
+                                   options=chrome_options,
+                                   port=59939)
+
+
+print(selenium_driver)
 
 
 #local testing
