@@ -9,6 +9,7 @@ from google.cloud import storage
 import time
 import datetime
 
+#removing variables
 selenium_driver=webdriver.Chrome()
 selenium_driver.quit()
 
