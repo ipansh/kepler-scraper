@@ -1,9 +1,7 @@
-from src.routers import scraper
+from src import scraper
 from fastapi import FastAPI
 import uvicorn
 import os
-
-
 
 app = FastAPI()
 app.include_router(scraper.router)
