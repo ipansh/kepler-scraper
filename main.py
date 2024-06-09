@@ -20,7 +20,6 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 
 service = Service(os.environ.get("CHROMEDRIVER_PATH"))
-options = webdriver.ChromeOptions()
 selenium_driver = webdriver.Chrome(service=service, options=chrome_options)
 
 app = FastAPI()
