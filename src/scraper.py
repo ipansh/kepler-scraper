@@ -38,7 +38,7 @@ router = APIRouter()
 
 @router.get("/health")
 def health_check():
-    selenium_driver.quit()
+    #selenium_driver.quit()
     return "OK"
 
 @router.post('/api/trigger')
@@ -71,7 +71,8 @@ def trigger_action():
                     (master_df['district'].isin(['Prenzlauer Berg','Pankow','Mitte']) == True) &
                     (master_df['url'].str.contains('|'.join(selected_list)) == False), 'is_right_fit'] = 1
     master_df['is_right_fit'] = master_df['is_right_fit'].fillna(0)
-    selenium_driver.quit()
+    #selenium_driver.quit()
+    print(master_df.head(4))
     #right_fit_df = master_df[master_df['is_right_fit'] == 1]
     #master_df.to_parquet(f'gs://kleineinzeigen/test_{str(current_date)}_{str(current_hour)}.parquet')
     return 'Action triggered!'
