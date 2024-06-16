@@ -23,6 +23,7 @@ fastapi==0.111.0
 fastapi-cli==0.0.4
 fastjsonschema==2.19.1
 filelock==3.14.0
+fsspec==2024.6.0
 google-api-core==2.19.0
 google-auth==2.30.0
 google-cloud-core==2.4.1
@@ -66,6 +67,7 @@ Protego==0.3.1
 proto-plus==1.23.0
 protobuf==4.25.3
 ptyprocess==0.7.0
+pyarrow==16.1.0
 pyasn1==0.6.0
 pyasn1_modules==0.4.0
 pycparser==2.22
