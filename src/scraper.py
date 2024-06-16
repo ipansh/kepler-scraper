@@ -13,6 +13,10 @@ from selenium.webdriver.chrome.service import Service
 
 from google.cloud import storage
 
+service_account_key_path = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+gcs_client = storage.Client.from_service_account_json(service_account_key_path)
+bucket = gcs_client.bucket('kleineinzeigen')
+
 security = HTTPBasic()
 
 #deployment
@@ -54,8 +58,8 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
 @router.post('/api/trigger', dependencies=[Depends(get_current_username)])
 def trigger_action():
     print('The script is up and running!')
-    # current_hour = int(time.localtime().tm_hour)
-    # current_date = datetime.date.today()
+    current_hour = int(time.localtime().tm_hour)
+    current_date = datetime.date.today()
     scraper_output_list = classifieds.scrape_ebay(selenium_driver)
     metric_list = ['id','scraped_date','wohnfläche','zimmer','schlafzimmer','badezimmer',
                     'warmmiete','kaution/genoss.-anteile','etage','nebenkosten','heizkosten',
@@ -72,5 +76,5 @@ def trigger_action():
     #master_df['is_right_fit'] = master_df['is_right_fit'].fillna(0)
     print(master_df.head(4))
     del master_df
-    #master_df.to_parquet(f'gs://kleineinzeigen/test_{str(current_date)}_{str(current_hour)}.parquet')
+    master_df.to_parquet(f'gs://kleineinzeigen/test_{str(current_date)}_{str(current_hour)}.parquet')
     return 'Action triggered!'
