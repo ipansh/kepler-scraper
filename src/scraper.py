@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+
 import logging
 import time
 import datetime
@@ -11,6 +13,7 @@ from selenium.webdriver.chrome.service import Service
 
 from google.cloud import storage
 
+security = HTTPBasic()
 
 #deployment
 chrome_options = webdriver.ChromeOptions()
@@ -23,7 +26,7 @@ selenium_driver = webdriver.Chrome(service=service,
                                    options=chrome_options)
 
 #local testing
-# selenium_driver = webdriver.Chrome()
+#selenium_driver = webdriver.Chrome()
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s:     %(message)s')
 logger = logging.getLogger(__name__)
@@ -35,7 +38,20 @@ def health_check():
     #selenium_driver.quit()
     return "OK"
 
-@router.post('/api/trigger')
+def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
+    """Authenticates the user based on HTTP Basic auth."""
+    correct_username = "test"  
+    correct_password = "test"  
+
+    if not (credentials.username == correct_username and credentials.password == correct_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return credentials.username
+
+@router.post('/api/trigger', dependencies=[Depends(get_current_username)])
 def trigger_action():
     print('The script is up and running!')
     # current_hour = int(time.localtime().tm_hour)
@@ -51,6 +67,7 @@ def trigger_action():
         print(new_listing['id'])
         new_listing = {key: new_listing[key] for key in metric_list}
         master_df = pd.concat([master_df, pd.DataFrame(new_listing, index = [0])]).reset_index().drop(columns = ['index'])
+        del new_listing
     master_df = master_df.drop_duplicates(subset = ['id'])
     #master_df['is_right_fit'] = master_df['is_right_fit'].fillna(0)
     print(master_df.head(4))
