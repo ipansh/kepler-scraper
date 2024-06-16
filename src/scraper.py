@@ -76,6 +76,6 @@ def trigger_action():
     master_df = master_df.drop_duplicates(subset = ['id'])
     #master_df['is_right_fit'] = master_df['is_right_fit'].fillna(0)
     print(master_df.head(4))
-    master_df.to_parquet(f'gs://kleineinzeigen/test_{str(current_date)}_{str(current_hour)}.parquet')
+    master_df.to_csv(f'gs://kleineinzeigen/test_{str(current_date)}_{str(current_hour)}.csv')
     del master_df
     return 'Action triggered!'
