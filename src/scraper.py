@@ -72,9 +72,12 @@ def trigger_action():
     for scraped_url in scraper_output_list:
         new_listing = classifieds.listing_url_to_dictionary(selenium_driver, scraped_url)
         print(new_listing['id'])
-        new_listing = {key: new_listing[key] for key in metric_list}
+        try:
+            new_listing = {key: new_listing[key] for key in metric_list}
+            del new_listing
+        except:
+            pass
         master_df = pd.concat([master_df, pd.DataFrame(new_listing, index = [0])]).reset_index().drop(columns = ['index'])
-        del new_listing
         time.sleep(10)
     master_df = master_df.drop_duplicates(subset = ['id'])
     print(master_df.head(4))
