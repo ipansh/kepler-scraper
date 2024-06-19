@@ -75,9 +75,8 @@ def trigger_action():
         new_listing = {key: new_listing[key] for key in metric_list}
         master_df = pd.concat([master_df, pd.DataFrame(new_listing, index = [0])]).reset_index().drop(columns = ['index'])
         del new_listing
-        break
+        time.sleep(10)
     master_df = master_df.drop_duplicates(subset = ['id'])
-    #master_df['is_right_fit'] = master_df['is_right_fit'].fillna(0)
     print(master_df.head(4))
     master_df.to_csv(f'gs://kleineinzeigen/test_{str(current_date)}_{str(current_hour)}.csv')
     del master_df
