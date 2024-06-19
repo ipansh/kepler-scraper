@@ -85,7 +85,6 @@ def trigger_action():
             break
         else:
             pass
-        time.sleep(5)
     master_df = master_df.drop_duplicates(subset = ['id'])
     print(master_df.head(4))
     master_df.to_csv(f'gs://kleineinzeigen/test_{str(current_date)}_{str(current_hour)}.csv')
