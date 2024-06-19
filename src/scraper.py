@@ -29,6 +29,9 @@ service = Service(os.environ.get("CHROMEDRIVER_PATH"))
 selenium_driver = webdriver.Chrome(service=service,
                                    options=chrome_options)
 
+username = os.environ['SCRAPER_USERNAME']
+password = os.environ['SCRAPER_PASSWORD']
+
 #local testing
 #selenium_driver = webdriver.Chrome()
 
@@ -44,8 +47,8 @@ def health_check():
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     """Authenticates the user based on HTTP Basic auth."""
-    correct_username = "test"  
-    correct_password = "test"  
+    correct_username = username
+    correct_password = password  
 
     if not (credentials.username == correct_username and credentials.password == correct_password):
         raise HTTPException(
