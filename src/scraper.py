@@ -69,6 +69,7 @@ def trigger_action():
                     'wohnungstyp','verfügbarab','online-besichtigung','tauschangebot','miete',
                     'zipcode','district','url']
     master_df = pd.DataFrame()
+    listing_count = 0
     for scraped_url in scraper_output_list:
         new_listing = classifieds.listing_url_to_dictionary(selenium_driver, scraped_url)
         try:
@@ -77,6 +78,12 @@ def trigger_action():
             master_df = pd.concat([master_df, pd.DataFrame(new_listing, index = [0])]).reset_index().drop(columns = ['index'])
             del new_listing
         except:
+            pass
+        listing_count = listing_count+1
+        #breaking for testing purposes at 5 listings
+        if listing_count > 5:
+            break
+        else:
             pass
         time.sleep(5)
     master_df = master_df.drop_duplicates(subset = ['id'])
