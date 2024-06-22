@@ -85,7 +85,7 @@ def trigger_action():
             break
         else:
             pass
-    master_id = master_df.rename(columns = {'wohnfläche': 'wohnflache',
+    master_df = master_df.rename(columns = {'wohnfläche': 'wohnflache',
                                 'kaution/genoss.-anteile': 'kaution',
                                 'verfügbarab': 'verfugbarab',
                                 'online-besichtigung': 'online_besichtigung',
