@@ -85,6 +85,11 @@ def trigger_action():
             break
         else:
             pass
+    master_id = master_df.rename(columns = {'wohnfläche': 'wohnflache',
+                                'kaution/genoss.-anteile': 'kaution'
+                                'verfügbarab': 'verfugbarab',
+                                'online-besichtigung': 'online_besichtigung',
+                                })
     master_df = master_df.drop_duplicates(subset = ['id'])
     print(master_df.head(4))
     master_df.to_csv(f'gs://kleineinzeigen/test_{str(current_date)}_{str(current_hour)}.csv')
