@@ -19,7 +19,6 @@ bucket = gcs_client.bucket('kleineinzeigen')
 
 security = HTTPBasic()
 
-#deployment
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
@@ -57,6 +56,11 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
             headers={"WWW-Authenticate": "Basic"},
         )
     return credentials.username
+
+@router.post('/check_recent_listings', dependencies=[Depends(get_current_username)])
+def check_recent_listings():
+    output_list = classifieds.scrape_ebay(selenium_driver)
+    return output_list
 
 @router.post('/api/trigger', dependencies=[Depends(get_current_username)])
 def trigger_action():
