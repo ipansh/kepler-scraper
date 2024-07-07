@@ -60,6 +60,8 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
 @router.post('/check_recent_listings', dependencies=[Depends(get_current_username)])
 def check_recent_listings():
     output_list = classifieds.scrape_ebay(selenium_driver)
+    print('LISTINGS:')
+    print(output_list)
     return output_list
 
 @router.post('/scrape_listings_info', dependencies=[Depends(get_current_username)])
