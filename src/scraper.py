@@ -62,19 +62,19 @@ def check_recent_listings():
     output_list = classifieds.scrape_ebay(selenium_driver)
     return output_list
 
-@router.post('/api/trigger', dependencies=[Depends(get_current_username)])
-def trigger_action():
+@router.post('/scrape_listings_info', dependencies=[Depends(get_current_username)])
+def scrape_listings_info(request_list: list):
     print('The script is up and running!')
     current_hour = int(time.localtime().tm_hour)
     current_date = datetime.date.today()
-    scraper_output_list = classifieds.scrape_ebay(selenium_driver)
+    #scraper_output_list = classifieds.scrape_ebay(selenium_driver)
     metric_list = ['id','scraped_date','wohnfläche','zimmer','schlafzimmer','badezimmer',
                     'warmmiete','kaution/genoss.-anteile','etage','nebenkosten','heizkosten',
                     'wohnungstyp','verfügbarab','online-besichtigung','tauschangebot','miete',
                     'zipcode','district','url']
     master_df = pd.DataFrame()
     listing_count = 0
-    for scraped_url in scraper_output_list:
+    for scraped_url in request_list:
         new_listing = classifieds.listing_url_to_dictionary(selenium_driver, scraped_url)
         try:
             new_listing = {key: new_listing[key] for key in metric_list}
