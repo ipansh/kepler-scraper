@@ -92,6 +92,6 @@ def trigger_action():
                                 })
     master_df = master_df.drop_duplicates(subset = ['id'])
     print(master_df.head(4))
-    master_df.to_csv(f'gs://kleineinzeigen/test_{str(current_date)}_{str(current_hour)}.csv')
+    master_df.to_csv(f'gs://kleinanzeigen-rent-listings/{str(current_date)}_{str(current_hour)}.csv')
     del master_df
     return 'Action triggered!'
