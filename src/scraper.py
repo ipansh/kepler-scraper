@@ -65,6 +65,10 @@ def check_recent_listings():
     return output_list
 
 @router.post('/scrape_listings_info', dependencies=[Depends(get_current_username)])
+def scrape_listings_info(request_dict):
+    return request_dict
+
+@router.post('/other', dependencies=[Depends(get_current_username)])
 def scrape_listings_info(request_dict: dict):
     request_list = request_dict['urls']
     print('The script is up and running!')
