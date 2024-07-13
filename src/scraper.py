@@ -64,6 +64,8 @@ def check_recent_listings():
     print(output_list)
     return output_list
 
+#
+
 @router.post('/scrape_listings_info', dependencies=[Depends(get_current_username)])
 def scrape_listings_info(request_dict: dict):
     request_list = request_dict['urls']
