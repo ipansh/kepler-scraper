@@ -65,7 +65,8 @@ def check_recent_listings():
     return output_list
 
 @router.post('/scrape_listings_info', dependencies=[Depends(get_current_username)])
-def scrape_listings_info(request_list: list):
+def scrape_listings_info(request_dict: dict):
+    request_list = request_dict['urls']
     print('The script is up and running!')
     current_hour = int(time.localtime().tm_hour)
     current_date = datetime.date.today()
