@@ -68,8 +68,9 @@ def check_recent_listings():
 
 @router.post('/scrape_listings_info', dependencies=[Depends(get_current_username)])
 def scrape_listings_info(request_dict: dict):
+    print(f'Received the request: {request_dict}')
     request_list = request_dict['urls']
-    print('The script is up and running!')
+    print(f'Parsed to list: {request_list}')
     current_hour = int(time.localtime().tm_hour)
     current_date = datetime.date.today()
     #scraper_output_list = classifieds.scrape_ebay(selenium_driver)
@@ -80,7 +81,7 @@ def scrape_listings_info(request_dict: dict):
     master_df = pd.DataFrame()
     listing_count = 0
     for scraped_url in request_list:
-        print(scraped_url)
+        print(f'Input URL: {scraped_url}')
         new_listing = classifieds.listing_url_to_dictionary(selenium_driver, scraped_url)
         try:
             new_listing = {key: new_listing[key] for key in metric_list}
