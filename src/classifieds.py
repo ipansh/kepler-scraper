@@ -106,11 +106,11 @@ def scrape_ebay(selenium_driver):
     return url_list
 
 def listing_url_to_dictionary(selenium_driver, input_url):
+        listing_dict = {}
         try:
                 selenium_driver.get(input_url)
                 selenium_response = selenium_driver.page_source
                 new_selector = Selector(text=selenium_response)
-                listing_dict = {}
                 listing_dict['id'] = input_url.split('/')[-1]
                 listing_name = new_selector.xpath('//h1[@id = "viewad-title"]/text()').extract()[0]
                 listing_name = listing_name.strip('\n').lstrip(' ')
