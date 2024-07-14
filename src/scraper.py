@@ -80,6 +80,7 @@ def scrape_listings_info(request_dict: dict):
     master_df = pd.DataFrame()
     listing_count = 0
     for scraped_url in request_list:
+        print(scraped_url)
         new_listing = classifieds.listing_url_to_dictionary(selenium_driver, scraped_url)
         try:
             new_listing = {key: new_listing[key] for key in metric_list}
