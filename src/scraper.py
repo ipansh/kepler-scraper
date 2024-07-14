@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 def get_current_minute():
-    current_minute = datetime.now().minute
+    current_minute = datetime.datetime.now().minute
     if current_minute < 20:
         return 0
     elif current_minute < 40:
@@ -82,7 +82,6 @@ def scrape_listings_info(request_dict: dict):
     print(f'Parsed to list: {request_list}')
     current_hour = int(time.localtime().tm_hour)
     current_date = datetime.date.today()
-    #scraper_output_list = classifieds.scrape_ebay(selenium_driver)
     metric_list = ['id','scraped_date','wohnfläche','zimmer','schlafzimmer','badezimmer',
                     'warmmiete','kaution/genoss.-anteile','etage','nebenkosten','heizkosten',
                     'wohnungstyp','verfügbarab','online-besichtigung','tauschangebot','miete',
