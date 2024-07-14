@@ -98,11 +98,11 @@ def clean_and_filter_gesucht_data(final_df):
 
 
 def scrape_ebay(selenium_driver):
-    selenium_driver.get("https://www.ebay-kleinanzeigen.de/s-wohnung-mieten/berlin/c203l3331")
+    selenium_driver.get("https://www.kleinanzeigen.de/s-wohnung-mieten/berlin/c203l3331")
     selenium_response = selenium_driver.page_source
     new_selector = Selector(text=selenium_response)
     listings = new_selector.xpath('//*[contains(@class,"text-module-begin")]/a/@href').extract()
-    url_list = ['https://www.ebay-kleinanzeigen.de'+listing for listing in listings]
+    url_list = ['https://www.kleinanzeigen.de'+listing for listing in listings]
     return url_list
 
 def listing_url_to_dictionary(selenium_driver, input_url):
