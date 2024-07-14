@@ -97,7 +97,7 @@ def clean_and_filter_gesucht_data(final_df):
     return filtered_df
 
 
-def scrape_ebay(selenium_driver):
+def scrape_kleinanzeigen(selenium_driver):
     selenium_driver.get("https://www.kleinanzeigen.de/s-wohnung-mieten/berlin/c203l3331")
     selenium_response = selenium_driver.page_source
     new_selector = Selector(text=selenium_response)
