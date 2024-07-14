@@ -39,6 +39,15 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
+def get_current_minute():
+    current_minute = datetime.now().minute
+    if current_minute < 20:
+        return 0
+    elif current_minute < 40:
+        return 20
+    else:
+        return 40
+
 @router.get("/health")
 def health_check():
     #selenium_driver.quit()
@@ -103,6 +112,6 @@ def scrape_listings_info(request_dict: dict):
                                 })
     master_df = master_df.drop_duplicates(subset = ['id'])
     print(master_df.head(4))
-    master_df.to_csv(f'gs://kleinanzeigen-rent-listings/{str(current_date)}_{str(current_hour)}.csv')
+    master_df.to_csv(f'gs://kleinanzeigen-rent-listings/{str(current_date)}-{str(current_hour)}-{str(get_current_minute())}.csv')
     del master_df
     return 'Action triggered!'
