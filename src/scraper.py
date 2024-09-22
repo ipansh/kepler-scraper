@@ -94,6 +94,7 @@ def scrape_listings_info(request_dict: dict):
             del new_listing
         except:
             pass
+        break
     master_df = master_df.rename(columns = {'wohnfläche': 'wohnflache',
                                 'kaution/genoss.-anteile': 'kaution',
                                 'verfügbarab': 'verfugbarab',
