@@ -18,7 +18,7 @@ gcs_client = storage.Client.from_service_account_json(service_account_key_path)
 bucket = gcs_client.bucket('kleineinzeigen')
 
 security = HTTPBasic()
-#test
+
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
@@ -50,7 +50,6 @@ def get_current_minute():
 
 @router.get("/health")
 def health_check():
-    #selenium_driver.quit()
     return "OK"
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
@@ -85,13 +84,18 @@ def scrape_listings_info(request_dict: dict):
                     'wohnungstyp','verfügbarab','online-besichtigung','tauschangebot','miete',
                     'zipcode','district','url']
     master_df = pd.DataFrame()
+    counter = 0
     for scraped_url in request_list:
         print(f'Input URL: {scraped_url}')
         new_listing = classifieds.listing_url_to_dictionary(selenium_driver, scraped_url)
         try:
             new_listing = {key: new_listing[key] for key in metric_list}
             master_df = pd.concat([master_df, pd.DataFrame(new_listing, index = [0])]).reset_index().drop(columns = ['index'])
-            del new_listing
+            counter = counter +1
+            if counter >= 10:
+                break
+            else:
+                pass
         except:
             pass
         break
