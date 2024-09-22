@@ -18,7 +18,7 @@ gcs_client = storage.Client.from_service_account_json(service_account_key_path)
 bucket = gcs_client.bucket('kleineinzeigen')
 
 security = HTTPBasic()
-
+#test
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
