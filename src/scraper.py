@@ -76,6 +76,8 @@ def check_recent_listings():
 def scrape_listings_info(request_dict: dict):
     print(f'Received the request: {request_dict}')
     request_list = request_dict['urls']
+    #temporary for testing
+    request_list = request_list[0:5]
     print(f'Parsed to list: {request_list}')
     current_hour = int(time.localtime().tm_hour)
     current_date = datetime.date.today()
@@ -84,8 +86,6 @@ def scrape_listings_info(request_dict: dict):
                     'wohnungstyp','verfügbarab','online-besichtigung','tauschangebot','miete',
                     'zipcode','district','url']
     master_df = pd.DataFrame()
-    #temporary for testing
-    request_list = request_list[0:5]
     for scraped_url in request_list:
         print(f'Input URL: {scraped_url}')
         new_listing = classifieds.listing_url_to_dictionary(selenium_driver, scraped_url)
@@ -101,7 +101,7 @@ def scrape_listings_info(request_dict: dict):
                                 'online-besichtigung': 'online_besichtigung',
                                 })
     master_df = master_df.drop_duplicates(subset = ['id'])
-    print(master_df.head(4))
+    print(master_df.shape)
     master_df.to_csv(f'gs://kleinanzeigen-rent-listings/{str(current_date)}-{str(current_hour)}-{str(get_current_minute())}.csv')
     del master_df
     return 'Action triggered!'
