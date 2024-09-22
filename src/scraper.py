@@ -84,22 +84,18 @@ def scrape_listings_info(request_dict: dict):
                     'wohnungstyp','verfügbarab','online-besichtigung','tauschangebot','miete',
                     'zipcode','district','url']
     master_df = pd.DataFrame()
-    counter = 0
+    #temporary for testing
+    request_list = request_list[0:5]
     for scraped_url in request_list:
         print(f'Input URL: {scraped_url}')
         new_listing = classifieds.listing_url_to_dictionary(selenium_driver, scraped_url)
         try:
             new_listing = {key: new_listing[key] for key in metric_list}
             master_df = pd.concat([master_df, pd.DataFrame(new_listing, index = [0])]).reset_index().drop(columns = ['index'])
-            counter = counter +1
-            if counter >= 10:
-                break
-            else:
-                pass
         except:
             pass
-        break
-    master_df = master_df.rename(columns = {'wohnfläche': 'wohnflache',
+    master_df = master_df.rename(columns ={
+                                'wohnfläche': 'wohnflache',
                                 'kaution/genoss.-anteile': 'kaution',
                                 'verfügbarab': 'verfugbarab',
                                 'online-besichtigung': 'online_besichtigung',
